@@ -85,6 +85,7 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 import Main from "./pages/Main";
 import Registration from "./pages/Registration";
 import Switch from "react-bootstrap/Switch";
+import About from "./components/About";
 
 
 const App = () => {
@@ -98,6 +99,7 @@ const App = () => {
                 <Switch>
                     <Route path="/" exact render={(props) => <Main/>}/>
                     <Route path="/register" exact render={(props) => <Registration/>}/>
+                    <Route path="/about" render={(props) => <About/>}/>
                 </Switch>
             </Router>
         </>

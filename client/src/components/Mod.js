@@ -12,6 +12,7 @@ export default function Mod() {
     return (
         <>
             <Navibar/>
+            <h1>MOD</h1>
         </>
     );
 }

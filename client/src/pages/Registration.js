@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import Mod from "../components/Mod";
+import {Form, Button} from "react-bootstrap";
 
 
 const Registration = () => {
@@ -58,26 +59,53 @@ const Registration = () => {
         <>
             {status === false &&
             <div className="App">
-                <div className="registration">
-                    <h1>Registration</h1>
-                    <label>firstName</label>
-                    <input type="text" onChange={(e) => {setFirstNameReg(e.target.value)}}/>
-                    <label>lastName</label>
-                    <input type="text" onChange={(e) => {setLastNameReg(e.target.value)}}/>
-                    <label>login</label>
-                    <input type="text" onChange={(e) => {setLoginReg(e.target.value)}}/>
-                    <label>Password</label>
-                    <input type="text" onChange={(e) => {setPasswordReg(e.target.value)}}/>
-                    <label>Birthday</label>
-                    <input type="text" onChange={(e) => {setBirthdayReg(e.target.value)}}/>
-                    <button onClick={register}>Register</button>
-                </div>
-                <div className='login'>
-                    <h1>Login</h1>
-                    <input type="text" placeholder="Login" onChange={(e) => {setLogin(e.target.value)}}/>
-                    <input type="password" placeholder="Password" onChange={(e) => {setPassword(e.target.value)}}/>
-                    <button onClick={loginUser}>Login</button>
-                </div>
+                <h2 style={{textAlign: 'center'}}>Registration</h2>
+                <Form className="registration">
+                    <Form.Group controlId="formBasicText">
+                        <Form.Label>firstName</Form.Label>
+                        <Form.Control type="text" placeholder="Enter firstName" onChange={(e) => {setFirstNameReg(e.target.value)}}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicText">
+                        <Form.Label>lastName</Form.Label>
+                        <Form.Control type="text" placeholder="Enter lastName" onChange={(e) => {setLastNameReg(e.target.value)}}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label>login</Form.Label>
+                        <Form.Control type="text" placeholder="Enter login" onChange={(e) => {setLoginReg(e.target.value)}}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label>password</Form.Label>
+                        <Form.Control type="password" placeholder="Enter password" onChange={(e) => {setPasswordReg(e.target.value)}}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicData">
+                        <Form.Label>birthday</Form.Label>
+                        <Form.Control type="text" placeholder="YYYY-MM-DD" onChange={(e) => {setBirthdayReg(e.target.value)}}/>
+                    </Form.Group>
+                    <Button variant="primary" type="submit" onClick={register}>
+                        Registration
+                    </Button>
+                </Form>
+                <h2 style={{textAlign: 'center'}}>Login</h2>
+                <Form className="login">
+
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label>login</Form.Label>
+                        <Form.Control type="text" placeholder="Enter login" onChange={(e) => {setLogin(e.target.value)}}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label>password</Form.Label>
+                        <Form.Control type="password" placeholder="Enter password" onChange={(e) => {setPassword(e.target.value)}}/>
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit" onClick={loginUser}>
+                        Login
+                    </Button>
+                </Form>
             </div>
             }
             {status && <Mod/>}
