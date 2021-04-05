@@ -7,7 +7,7 @@ const Navibar = () => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" varint="dark">
             {/* "Link" in brand component since just redirect is needed */}
-            <Navbar.Brand as={Link} to='/'>WebDev Blog</Navbar.Brand>
+            <Navbar.Brand as={Link} to='/'>Gardener Blog</Navbar.Brand>
             <Nav className="mr-auto">
                 {/* "NavLink" here since "active" class styling is needed */}
                 <Nav.Link as={NavLink} to='/' exact>Home</Nav.Link>
