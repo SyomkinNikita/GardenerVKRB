@@ -32,7 +32,16 @@ const db = mysql.createConnection({
   user: "root",
   host: "localhost",
   password: "1234",
-  database: "VKRB",
+  database: "Testing",
+});
+
+db.connect(function(err){
+    if (err) {
+        return console.error("Ошибка: " + err.message);
+    }
+    else{
+        console.log("Подключение к серверу MySQL успешно установлено");
+    }
 });
 
 app.post('/register', (req, res) => {
@@ -46,10 +55,32 @@ app.post('/register', (req, res) => {
         if (err) {
             console.log(err);
         }
-        db.query("INSERT INTO users (firstname, lastname, login, pass, birthday) VALUES (?,?,?,?,?)", [firstname, lastname, login, hash, birthday],
+        db.query("INSERT INTO Users (firstname, lastname, login, pass, birthday) VALUES (?,?,?,?,?)", [firstname, lastname, login, hash, birthday],
             (err, result) => {
                 console.log(err);
+                console.log(result);
         });
+    })
+});
+
+app.post('/updateUser', (req, res) => {
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    const login = req.body.login;
+    const pass = req.body.pass;
+    const birthday = req.body.birthday;
+    const idUsers = req.body.id;
+
+
+    bcrypt.hash(pass, saltRounds, (err, hash) => {
+        if (err) {
+            console.log(err);
+        }
+        db.query(`UPDATE Users SET firstname='${firstname}', lastname='${lastname}', login='${login}', pass='${hash}', birthday='${birthday}' WHERE idUsers = '${idUsers}'`, [firstname, lastname, login, hash, birthday],
+            (err, result) => {
+                console.log(err);
+                console.log(result);
+            });
     })
 });
 
@@ -61,12 +92,20 @@ app.get("/login", (req, res) => {
    }
 });
 
+app.get("/users", (req,res) => {
+    if (req.session.user) {
+        res.send({loggedIn: true, user: req.session.user})
+    } else {
+        res.send({loggedIn: false})
+    }
+});
+
 app.post('/login', (req, res) => {
     const login = req.body.login;
     const pass = req.body.pass;
 
     db.query(
-        "SELECT *FROM users WHERE login = ?;",
+        "SELECT *FROM Users WHERE login = ?;",
         login,
         (err, result) => {
             if (err) {

@@ -37,7 +37,8 @@ const Registration = () => {
             pass: password,
         }).then((response) => {
             if (response.data.message) {
-                setLoginStatus(response.data.message)
+                console.log(loginStatus);
+                setLoginStatus(response.data.message);
             } else {
                 setLoginStatus(response.data[0].login);
             }
@@ -47,7 +48,6 @@ const Registration = () => {
     useEffect(() => {
         Axios.get("http://localhost:3001/login").then((response) => {
             if (response.data.loggedIn === true) {
-                setStatus(true);
                 setLoginStatus(response.data.user[0].firstname);
             }
         })

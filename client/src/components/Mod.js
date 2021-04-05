@@ -10,9 +10,9 @@ import Navibar from "./Navibar";
 
 export default function Mod() {
     return (
-        <>
+        <div className="mod">
             <Navibar/>
             <h1>MOD</h1>
-        </>
+        </div>
     );
 }

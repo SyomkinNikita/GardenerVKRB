@@ -86,6 +86,7 @@ import Main from "./pages/Main";
 import Registration from "./pages/Registration";
 import Switch from "react-bootstrap/Switch";
 import About from "./components/About";
+import Users from "./components/Users";
 
 
 const App = () => {
@@ -100,6 +101,7 @@ const App = () => {
                     <Route path="/" exact render={(props) => <Main/>}/>
                     <Route path="/register" exact render={(props) => <Registration/>}/>
                     <Route path="/about" render={(props) => <About/>}/>
+                    <Route path="/users" render={(props) => <Users/>}/>
                 </Switch>
             </Router>
         </>
