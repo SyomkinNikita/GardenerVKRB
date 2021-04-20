@@ -80,16 +80,20 @@ import Home from "./components/Home";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from "./components/About";
 import PlantAdd from "./components/PlantAdd";
+import {Provider} from "react-redux";
+import store from "./store/store";
 
 function App() {
     return (
-        <Router>
-            <Route path="/" exact render={(props) => <Registration />} />
-            <Route path="/home" render={(props) => <Home />} />
-            <Route path="/about" render={(props) => <About/>}/>
-            <Route path="/plantAdd" render={(props) => <PlantAdd/>} />
-            {/*<Route path="/users" render={(props) => <Users/>}/>*/}
-        </Router>
+        <Provider store={store}>
+            <Router>
+                <Route path="/" exact render={(props) => <Registration />} />
+                <Route path="/home" render={(props) => <Home />} />
+                <Route path="/about" render={(props) => <About/>}/>
+                <Route path="/plantAdd" render={(props) => <PlantAdd/>} />
+                {/*<Route path="/users" render={(props) => <Users/>}/>*/}
+            </Router>
+        </Provider>
     );
 }
 

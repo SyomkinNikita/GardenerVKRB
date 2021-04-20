@@ -113,6 +113,24 @@ app.post('/updateUser', (req, res) => {
     })
 });*/
 
+
+app.post('/plantAdd', (req, res) => {
+    const Name_Plant = req.body.Name_Plant;
+    const Ripening_season_Plant = req.body.Ripening_season_Plant;
+    const Purpose_Plant = req.body.Purpose_Plant;
+    const Discribe_Plant = req.body.Discribe_Plant;
+    const Status_Plant = req.body.Status_Plant;
+    const ID_Gardener_FK = req.body.ID_Gardener_FK;
+
+
+        db.query("INSERT INTO plant (Name_Plant, Ripening_season_Plant, Purpose_Plant, Discribe_Plant, Status_Plant, ID_Gardener_FK) VALUES (?,?,?,?,?,?)",
+            [Name_Plant, Ripening_season_Plant, Purpose_Plant, Discribe_Plant, Status_Plant,ID_Gardener_FK],
+            (err, result) => {
+                console.log(err);
+                console.log(result);
+            });
+});
+
 app.listen(3001, () => {
     console.log("running server")
 })

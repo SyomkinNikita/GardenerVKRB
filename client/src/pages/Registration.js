@@ -2,7 +2,7 @@ import React from "react";
 import {Redirect} from 'react-router-dom'
 import Axios from "axios";
 import Home from "../components/Home";
-
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 
 
 const Registration = () => {
@@ -13,6 +13,13 @@ const Registration = () => {
     const [loginUser, setLoginUser] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loginStatus, setLoginStatus] = React.useState(null);
+    const users = useSelector(state => state.data, shallowEqual);
+    const dispatch = useDispatch();
+
+
+    function addUserAction(title) {
+        return {type: 'ADD_USER', payload: title}
+    }
 
     Axios.defaults.withCredentials = true;
     const register = () => {
@@ -30,7 +37,8 @@ const Registration = () => {
             if (response.data.message) {
                 setLoginStatus(response.data.message);
             } else {
-                setLoginStatus(response.data[0].Login_Gardener)
+                setLoginStatus(response.data[0].Login_Gardener);
+                dispatch(addUserAction(response.data[0]));
             }
         })
     }
@@ -39,6 +47,7 @@ const Registration = () => {
         Axios.get("http://localhost:3001/login").then((response) => {
             if (response.data.loggedIn ===true) {
                 setLoginStatus(response.data.user[0].Login_Gardener);
+                dispatch(addUserAction(response.data[0]));
             }
         })
     }, [])
