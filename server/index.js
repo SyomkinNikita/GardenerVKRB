@@ -131,6 +131,19 @@ app.post('/plantAdd', (req, res) => {
             });
 });
 
+app.post('/userPlant', (req, res) => {
+    const ID_Gardener_FK = req.body.ID_Gardener_FK;
+    db.query(`SELECT * from Plant WHERE ID_Gardener_FK = ${ID_Gardener_FK}`,
+        [ID_Gardener_FK],
+        (err, result) => {
+            console.log(err);
+            console.log(result);
+            res.send(result)
+        });
+})
+
+
+
 app.listen(3001, () => {
     console.log("running server")
 })
