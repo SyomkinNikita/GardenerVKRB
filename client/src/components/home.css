@@ -1,4 +1,24 @@
-.d-block {
-    height: 500px;
-    width: 50px
+.plant {
+    background-color: rgba(0,255,127, .2);
+}
+
+.plant__title {
+    padding-top: 15px;
+    text-align: center;
+}
+
+.plant__block {
+    display: flex;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.plant__image {
+    height: 200px;
+    width: 200px;
+}
+
+.plant__info {
+    font-size: 20px;
+    margin-left: 30px;
 }

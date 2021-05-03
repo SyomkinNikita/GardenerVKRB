@@ -2,6 +2,7 @@ export const data = [
     {
         "id": 1,
         "type": "berries",
+        "image": "../images/berries/Арбуз Русский размер F1.jpeg",
         "Name_Plant": "Земляника",
         "Ripening_season_Plant": "Июнь-Август",
         "Purpose_Plant": "Сад и огород",
@@ -11,6 +12,7 @@ export const data = [
     {
         "id": 2,
         "type": "berries",
+        "image": "../images/berries/Арбуз Русский размер F1.jpeg",
         "Name_Plant": "Арбуз",
         "Ripening_season_Plant": "Июнь-Август",
         "Purpose_Plant": "Сад и огород",
@@ -364,7 +366,7 @@ export const data = [
     {
         "id": 41,
         "type": "vegetables",
-        "image": "../images/vegetables/Томат Монгольский карлик.jpeg",
+        "image": "../images/berries/Арбуз Русский размер F1.jpeg",
         "Name_Plant": "Томат",
         "Ripening_season_Plant": "Июль-Август",
         "Purpose_Plant": "Сад и огород",
@@ -455,6 +457,7 @@ export const data = [
     {
         "id": 51,
         "type": "vegetables",
+        "image": "../images/berries/Арбуз Русский размер F1.jpeg",
         "Name_Plant": "Бобы",
         "Ripening_season_Plant": "Август-Сентябрь",
         "Purpose_Plant": "Сад и огород",

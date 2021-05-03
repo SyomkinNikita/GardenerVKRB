@@ -201,7 +201,7 @@ const PlantAdd = () => {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </td>
-                        <td onClick={(event) => plantAddClick(item['id'])}>Click</td>
+                        <td onClick={() => plantAddClick(item['id'])}>Click</td>
                     </tr>
                 ))}
                 {trees === 'trees' &&

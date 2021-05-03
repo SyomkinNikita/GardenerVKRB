@@ -1,16 +1,21 @@
 import React from "react";
 import Axios from "axios";
 import Navibar from "./Navibar";
-import {Carousel} from "react-bootstrap";
+import {Badge, Carousel, Container, Row} from "react-bootstrap";
 import main1 from '../images/1.jpg';
 import main2 from '../images/2.jpg';
 import main3 from '../images/3.jpg';
+import watermelon from '../images/berries/Арбуз.jpg';
+import watermelon1 from '../images/berries/Арбуз Русский размер F1.jpeg';
 import {data} from '../store/data'
 import './home.css'
 import {useStore} from "react-redux";
+import PlantAddedUser from "./PlantAddedUser";
 
 export default function Home() {
     const [newStateData, setNewStateData] = React.useState(null);
+    const [grade, setGrade] = React.useState(null);
+    const [namePlant, setNamePlant] = React.useState(null);
     const store = useStore();
 
     React.useEffect(() => {
@@ -19,13 +24,25 @@ export default function Home() {
             Axios.post('http://localhost:3001/userPlant', {
                 ID_Gardener_FK: store.getState().data[1]['ID_Gardener'],
             }).then((response) => {
-                setNewStateData(response.data.map(item => item));
-                console.log(response.data[0]['ID_Plant']);
+                setGrade(response.data.map(item => item['Discribe_Plant']));
+                setNamePlant(response.data.map(item => item['Name_Plant']))
             })
         }
-    }, [store, setNewStateData])
+    }, [store, setNewStateData, setGrade, setNamePlant])
 
-    console.log(newStateData)
+
+    const idNamePlant = []
+    if (grade !== null && namePlant !== null) {
+        grade.filter(item => {
+            for (let i = 0; i < data.length; i++) {
+                if (item === data[i].Discribe_Plant ) {
+                    idNamePlant.push(data[i].id);
+                }
+            }
+        })
+    }
+
+    console.log(idNamePlant);
 
     return (
         <div>
@@ -66,6 +83,16 @@ export default function Home() {
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
+            <div className="plant">
+                <h1 className="plant__title">
+                    <Badge variant="success">Мои растения</Badge>
+                </h1>
+                {data.map(item => {
+                    if (idNamePlant.includes(item.id)) {
+                        return PlantAddedUser(item)
+                    }
+                })}
+            </div>
         </div>
     );
 }
