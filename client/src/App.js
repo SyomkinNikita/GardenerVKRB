@@ -82,6 +82,7 @@ import About from "./components/About";
 import PlantAdd from "./components/PlantAdd";
 import {Provider} from "react-redux";
 import store from "./store/store";
+import Users from "./components/Users";
 
 function App() {
     return (
@@ -91,7 +92,7 @@ function App() {
                 <Route path="/home" render={(props) => <Home />} />
                 <Route path="/about" render={(props) => <About/>}/>
                 <Route path="/plantAdd" render={(props) => <PlantAdd/>} />
-                {/*<Route path="/users" render={(props) => <Users/>}/>*/}
+                <Route path="/users" render={(props) => <Users/>}/>
             </Router>
         </Provider>
     );

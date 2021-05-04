@@ -5,18 +5,23 @@ import {Badge, Carousel, Container, Row} from "react-bootstrap";
 import main1 from '../images/1.jpg';
 import main2 from '../images/2.jpg';
 import main3 from '../images/3.jpg';
-import watermelon from '../images/berries/Арбуз.jpg';
-import watermelon1 from '../images/berries/Арбуз Русский размер F1.jpeg';
 import {data} from '../store/data'
 import './home.css'
 import {useStore} from "react-redux";
 import PlantAddedUser from "./PlantAddedUser";
 
+const API_KEY = '01e442bc-86fc-457c-8d68-133576e2b18b';
 export default function Home() {
     const [newStateData, setNewStateData] = React.useState(null);
     const [grade, setGrade] = React.useState(null);
     const [namePlant, setNamePlant] = React.useState(null);
     const store = useStore();
+
+    fetch('https://geocode-maps.yandex.ru/1.x/?format=json&apikey=01e442bc-86fc-457c-8d68-133576e2b18b&geocode=37.597576,55.771899')
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.log("error", error));
+
 
     React.useEffect(() => {
         if (store.getState().data[1] !== undefined) {
@@ -42,7 +47,7 @@ export default function Home() {
         })
     }
 
-    console.log(idNamePlant);
+    console.log(store.getState());
 
     return (
         <div>
