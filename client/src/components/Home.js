@@ -9,19 +9,33 @@ import {data} from '../store/data'
 import './home.css'
 import {useStore} from "react-redux";
 import PlantAddedUser from "./PlantAddedUser";
+import {usePosition} from "use-position";
+import axios from "axios";
 
 const API_KEY = '01e442bc-86fc-457c-8d68-133576e2b18b';
 export default function Home() {
     const [newStateData, setNewStateData] = React.useState(null);
     const [grade, setGrade] = React.useState(null);
     const [namePlant, setNamePlant] = React.useState(null);
+    const [apiGeocoder, setApiGeoCoder] = React.useState('');
     const store = useStore();
 
-    fetch('https://geocode-maps.yandex.ru/1.x/?format=json&apikey=01e442bc-86fc-457c-8d68-133576e2b18b&geocode=37.597576,55.771899')
-        .then(response => response.json())
-        .then(result => console.log(result))
-        .catch(error => console.log("error", error));
+    const {
+        latitude,
+        longitude,
+        speed,
+        timestamp,
+        accuracy,
+        error,
+    } = usePosition();
 
+
+    React.useEffect(() => {
+        fetch(`https://geocode-maps.yandex.ru/1.x/?format=json&apikey=01e442bc-86fc-457c-8d68-133576e2b18b&geocode=${longitude},${latitude}`)
+            .then(response => response.json())
+            .then(result => setApiGeoCoder(result))
+            .catch(error => console.log("error", error));
+    }, [setApiGeoCoder, longitude, latitude]);
 
     React.useEffect(() => {
         if (store.getState().data[1] !== undefined) {
@@ -94,7 +108,7 @@ export default function Home() {
                 </h1>
                 {data.map(item => {
                     if (idNamePlant.includes(item.id)) {
-                        return PlantAddedUser(item)
+                        return PlantAddedUser(item, latitude, longitude, apiGeocoder)
                     }
                 })}
             </div>

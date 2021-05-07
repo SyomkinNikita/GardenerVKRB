@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import Navibar from "./Navibar";
 import Axios from "axios";
 import { Form, Button } from 'react-bootstrap'
-import { usePosition } from 'use-position';
 
 const Users = () => {
     const [firstNameData, setFirstNameData] = React.useState('');
@@ -11,14 +10,6 @@ const Users = () => {
     const [passwordData, setPasswordData] = React.useState('');
     const [birthdayData, setBirthdayData] = React.useState('');
     const [idUser, setIdUser] = React.useState('');
-    const {
-        latitude,
-        longitude,
-        speed,
-        timestamp,
-        accuracy,
-        error,
-    } = usePosition();
 
     const updateUser = () => {
         Axios.post('http://localhost:3001/updateUser', {
@@ -44,7 +35,6 @@ const Users = () => {
         })
     }, []);
     console.log(idUser, firstNameData, lastNameData, loginData, passwordData, birthdayData);
-    console.log(latitude, longitude);
 
     return (
         <div className="users">
