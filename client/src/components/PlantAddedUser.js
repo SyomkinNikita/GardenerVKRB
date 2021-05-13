@@ -28,17 +28,7 @@ import {Badge} from "react-bootstrap";
 import axios from "axios";
 
 const PlantAddedUser = (item, latitude, longitude, apiGeocoder) => {
-    console.log(latitude, longitude, apiGeocoder);
-    /*if (item.id > 80) {
-        fetch(`https://geocode-maps.yandex.ru/1.x/?format=json&apikey=01e442bc-86fc-457c-8d68-133576e2b18b&geocode=${longitude},${latitude}`)
-            .then(response => response.json())
-            .then(result => setApiGeoCoder(result))
-            .catch(error => console.log("error", error));
-    }
-
-    if (apiGeocoder !== '') {
-        console.log(apiGeocoder);
-    }*/
+    /*console.log(latitude, longitude, apiGeocoder);*/
     return (
         <div key={item.id} className="plant__block">
             {item.Name_Plant === 'Арбуз' && <img src={watermelon} alt="трололо" className="plant__image"/>}

@@ -10,7 +10,7 @@ import './home.css'
 import {useStore} from "react-redux";
 import PlantAddedUser from "./PlantAddedUser";
 import {usePosition} from "use-position";
-import axios from "axios";
+import CalcOfPrecipitation from "../utils/utils";
 
 const API_KEY = '01e442bc-86fc-457c-8d68-133576e2b18b';
 export default function Home() {
@@ -18,8 +18,10 @@ export default function Home() {
     const [grade, setGrade] = React.useState(null);
     const [namePlant, setNamePlant] = React.useState(null);
     const [apiGeocoder, setApiGeoCoder] = React.useState('');
+    const [count, setCount] = React.useState(0);
+    const [start, setStart] = React.useState(null);
+    const [end, setEnd] = React.useState(null);
     const store = useStore();
-
     const {
         latitude,
         longitude,
@@ -28,14 +30,22 @@ export default function Home() {
         accuracy,
         error,
     } = usePosition();
+    if (count < 1 && (longitude !== undefined && latitude !== undefined)) {
+        const utils = CalcOfPrecipitation(longitude, latitude);
+        setCount(count+1);
+    }
 
-
-    React.useEffect(() => {
-        fetch(`https://geocode-maps.yandex.ru/1.x/?format=json&apikey=01e442bc-86fc-457c-8d68-133576e2b18b&geocode=${longitude},${latitude}`)
+    /*if (count < 1 && (longitude !== undefined && latitude !== undefined)) {
+        setStart(new Date().getDate() - 4);
+        setEnd(new Date().getDate());
+        const timeNow = parseInt((new Date().getTime()/1000));
+        const timeYesterday = parseInt((new Date("2021-05-08").getTime()/1000));
+        fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${latitude}&lon=${longitude}&dt=${timeYesterday}&units=metric&lang=ru&appid=e82996ed7935d8141c26eff1f2aa0f37`)
             .then(response => response.json())
             .then(result => setApiGeoCoder(result))
             .catch(error => console.log("error", error));
-    }, [setApiGeoCoder, longitude, latitude]);
+        setCount(count+1);
+    }*/
 
     React.useEffect(() => {
         if (store.getState().data[1] !== undefined) {
@@ -62,7 +72,10 @@ export default function Home() {
     }
 
     console.log(store.getState());
-
+   /* if (apiGeocoder['hourly'] !== undefined) {
+        console.log(apiGeocoder['hourly'][0].weather);
+    }
+*/
     return (
         <div>
             <Navibar/>
