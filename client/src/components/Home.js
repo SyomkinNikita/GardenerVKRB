@@ -11,6 +11,7 @@ import {useStore} from "react-redux";
 import PlantAddedUser from "./PlantAddedUser";
 import {usePosition} from "use-position";
 import CalcOfPrecipitation from "../utils/utils";
+import utils from "../utils/utils";
 
 const API_KEY = '01e442bc-86fc-457c-8d68-133576e2b18b';
 export default function Home() {
@@ -31,7 +32,7 @@ export default function Home() {
         error,
     } = usePosition();
     if (count < 1 && (longitude !== undefined && latitude !== undefined)) {
-        const utils = CalcOfPrecipitation(longitude, latitude);
+        let utils = CalcOfPrecipitation(longitude, latitude);
         setCount(count+1);
     }
 
