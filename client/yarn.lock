@@ -7401,6 +7401,11 @@
   "resolved" "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   "version" "2.6.2"
 
+"nest-object-deep-copy@^1.0.13":
+  "integrity" "sha512-2SSgiwmyI8PhV4q3w0FxPxjhrDhG/8yrJJRJd/YW+h9hl9sUBzzLlZJAesd7U2BAY5k+G8NhrozyMMDfgHRZIA=="
+  "resolved" "https://registry.npmjs.org/nest-object-deep-copy/-/nest-object-deep-copy-1.0.13.tgz"
+  "version" "1.0.13"
+
 "next-tick@~1.0.0":
   "integrity" "sha1-yobR/ogoFpsBICCOPchCS524NCw="
   "resolved" "https://registry.npmjs.org/next-tick/-/next-tick-1.0.0.tgz"

@@ -160,9 +160,9 @@ export const data = [
         "id": 18,
         "type": "berries",
         "Name_Plant": "Земляника",
-        "Ripening_season_Plant": "Июнь-Июль",
+        "Ripening_season_Plant": "Июнь-Сентябрь",
         "Purpose_Plant": "Сад и огород",
-        "Discribe_Plant": "Заря F1 Элит мини",
+        "Discribe_Plant": "Белоснежка",
         "Status_Plant": "Семена не посажены",
     },
     {

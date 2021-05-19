@@ -27,8 +27,16 @@ import beet from "../images/vegetables/Beet.jpg";
 import {Badge} from "react-bootstrap";
 import axios from "axios";
 
-const PlantAddedUser = (item, latitude, longitude, apiGeocoder) => {
-    /*console.log(latitude, longitude, apiGeocoder);*/
+const PlantAddedUser = (item, latitude, longitude, apiGeocoder, dateWater, dateWaterBD, idNamePlant, dataPlantAddedUser) => {
+    idNamePlant.forEach((itemTest, index) => {
+        let count = 0;
+        if (itemTest === item.id) {
+            console.log(index);
+            item['dateWaterBD'] = dateWaterBD[index];
+            ++count;
+        }
+    });
+    console.log(item);
     return (
         <div key={item.id} className="plant__block">
             {item.Name_Plant === 'Арбуз' && <img src={watermelon} alt="трололо" className="plant__image"/>}

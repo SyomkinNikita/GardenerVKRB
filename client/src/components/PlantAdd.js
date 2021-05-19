@@ -4,6 +4,7 @@ import {Dropdown, Table} from "react-bootstrap";
 import Axios from "axios";
 import {useStore} from "react-redux";
 import {data} from '../store/data'
+import moment from "moment";
 
 const PlantAdd = () => {
     const [berries, setBerries] = React.useState('');
@@ -18,6 +19,7 @@ const PlantAdd = () => {
     const plantAddClick = id => {
         console.log(id);
         const newData = data.find(item => item['id'] === id);
+        const dateNow = moment().format('DD.MM.YYYY');
         console.log(newData['type']);
         Axios.post('http://localhost:3001/plantAdd', {
             Name_Plant: newData['Name_Plant'],
@@ -25,6 +27,7 @@ const PlantAdd = () => {
             Purpose_Plant: newData['Purpose_Plant'],
             Discribe_Plant: newData['Discribe_Plant'],
             Status_Plant: newData['Status_Plant'],
+            Water_Plant: dateNow,
             ID_Gardener_FK: store.getState().data[1]['ID_Gardener'],
         }).then((response) => {
             console.log(response);

@@ -10,30 +10,48 @@ import './home.css'
 import {useStore} from "react-redux";
 import PlantAddedUser from "./PlantAddedUser";
 import {usePosition} from "use-position";
-import CalcOfPrecipitation from "../utils/utils";
-import utils from "../utils/utils";
+import calcOfPrecipitation from "../utils/utils";
+import howManyDaysRain from "../utils/utils";
+import moment from "moment";
 
-const API_KEY = '01e442bc-86fc-457c-8d68-133576e2b18b';
+
 export default function Home() {
     const [newStateData, setNewStateData] = React.useState(null);
     const [grade, setGrade] = React.useState(null);
     const [namePlant, setNamePlant] = React.useState(null);
     const [apiGeocoder, setApiGeoCoder] = React.useState('');
-    const [count, setCount] = React.useState(0);
-    const [start, setStart] = React.useState(null);
-    const [end, setEnd] = React.useState(null);
+    const [count, setCount] = React.useState(null);
+    const [dateWater, setDateWater] = React.useState(null);
+    const [dateWaterBD, setDateWaterBD] = React.useState(null);
+    let rain;
     const store = useStore();
     const {
         latitude,
-        longitude,
-        speed,
-        timestamp,
-        accuracy,
-        error,
+        longitude
     } = usePosition();
-    if (count < 1 && (longitude !== undefined && latitude !== undefined)) {
-        let utils = CalcOfPrecipitation(longitude, latitude);
-        setCount(count+1);
+
+    // Подсчет Rain
+    React.useEffect(() => {
+        if (latitude !== undefined && longitude !== undefined) {
+            rain =  calcOfPrecipitation(longitude, latitude).then(result => setCount(result))
+        }
+    }, [latitude, longitude, rain, setCount])
+
+    React.useEffect(() => {
+        if (count !== null) {
+            setDateWater(howManyDaysRain(count))
+        }
+    }, [setDateWater, count])
+
+    function howManyDaysRain(responseDT) {
+        let date = 0;
+        for (let i = 0; i < responseDT?.size; i++) {
+            let dateYYYYMMDD = moment().subtract(i, 'days').format('YYYYMMDD');
+            if (responseDT?.get(`${dateYYYYMMDD}`) >= 15) { // НАДО ПРОВЕРИТЬ
+                date = dateYYYYMMDD;
+            }
+        }
+        return date;
     }
 
     /*if (count < 1 && (longitude !== undefined && latitude !== undefined)) {
@@ -48,6 +66,8 @@ export default function Home() {
         setCount(count+1);
     }*/
 
+
+    // Получение из бд растения пользователя
     React.useEffect(() => {
         if (store.getState().data[1] !== undefined) {
             console.log(store.getState().data[1]);
@@ -55,13 +75,15 @@ export default function Home() {
                 ID_Gardener_FK: store.getState().data[1]['ID_Gardener'],
             }).then((response) => {
                 setGrade(response.data.map(item => item['Discribe_Plant']));
-                setNamePlant(response.data.map(item => item['Name_Plant']))
+                setNamePlant(response.data.map(item => item['Name_Plant']));
+                setDateWaterBD(response.data.map(item => item['Water_Plant']));
             })
         }
-    }, [store, setNewStateData, setGrade, setNamePlant])
+    }, [store, setNewStateData, setGrade, setNamePlant, setDateWaterBD])
 
 
-    const idNamePlant = []
+    const idNamePlant = [];
+    let dataPlantAddedUser = [];
     if (grade !== null && namePlant !== null) {
         grade.filter(item => {
             for (let i = 0; i < data.length; i++) {
@@ -71,12 +93,14 @@ export default function Home() {
             }
         })
     }
+    /*{data.map(item => {
+        if (idNamePlant.includes(item.id) && dateWater !== null && dateWaterBD !== null) {
+            return dataPlantAddedUser.push(item)
+        }
+    })}*/
 
-    console.log(store.getState());
-   /* if (apiGeocoder['hourly'] !== undefined) {
-        console.log(apiGeocoder['hourly'][0].weather);
-    }
-*/
+    console.log('new', dataPlantAddedUser);
+
     return (
         <div>
             <Navibar/>
@@ -121,8 +145,8 @@ export default function Home() {
                     <Badge variant="success">Мои растения</Badge>
                 </h1>
                 {data.map(item => {
-                    if (idNamePlant.includes(item.id)) {
-                        return PlantAddedUser(item, latitude, longitude, apiGeocoder)
+                    if (idNamePlant.includes(item.id) && dateWater !== null && dateWaterBD !== null) {
+                        return PlantAddedUser(item, latitude, longitude, apiGeocoder, dateWater, dateWaterBD, idNamePlant, dataPlantAddedUser)
                     }
                 })}
             </div>
