@@ -146,7 +146,8 @@ export default function Home() {
                 </h1>
                 {data.map(item => {
                     if (idNamePlant.includes(item.id) && dateWater !== null && dateWaterBD !== null) {
-                        return PlantAddedUser(item, latitude, longitude, apiGeocoder, dateWater, dateWaterBD, idNamePlant, dataPlantAddedUser)
+                        return PlantAddedUser(item, latitude, longitude, apiGeocoder, dateWater, dateWaterBD, idNamePlant, dataPlantAddedUser, store)
+                        return PlantAddedUser(item, latitude, longitude, apiGeocoder, dateWater, dateWaterBD, idNamePlant, dataPlantAddedUser, store)
                     }
                 })}
             </div>

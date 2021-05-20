@@ -143,6 +143,19 @@ app.post('/userPlant', (req, res) => {
         });
 })
 
+app.post('/updateWater', (req, res) => {
+    const Discribe_Plant = req.body.Discribe_Plant;
+    const Water_Plant = req.body.Water_Plant;
+    const ID_Gardener_FK = req.body.ID_Gardener_FK;
+    db.query(`UPDATE plant SET Water_Plant = '${Water_Plant}' WHERE (Discribe_Plant = '${Discribe_Plant}');`),
+        [Discribe_Plant, Water_Plant],
+        (err, result) => {
+            console.log(err);
+            console.log(result);
+            res.send(result)
+        };
+})
+
 
 
 app.listen(3001, () => {

@@ -26,8 +26,54 @@ import radish from "../images/vegetables/Radish.jpg";
 import beet from "../images/vegetables/Beet.jpg";
 import {Badge} from "react-bootstrap";
 import axios from "axios";
+import moment from "moment";
+import Button from "react-bootstrap/Button";
+import {data} from "../store/data";
+import Axios from "axios";
+import store from "../store/store";
+import {useStore} from "react-redux";
 
-const PlantAddedUser = (item, latitude, longitude, apiGeocoder, dateWater, dateWaterBD, idNamePlant, dataPlantAddedUser) => {
+const PlantAddedUser = (item, latitude, longitude, apiGeocoder, dateWater, dateWaterBD, idNamePlant, dataPlantAddedUser, store) => {
+    const recomWaterPoliv = (water) => {
+        let text;
+        const dateNow = moment().subtract(5, 'days').format('DD')
+        console.log(Number(water.split('.')[0]), Number(dateNow));
+        if (Number(water.split('.')[0]) <= Number(dateNow)) {
+            text = 'Рекомендуется полить'
+        } else {
+            text = 'Полив не нужен'
+        }
+        return text;
+    }
+    const plantWaterClick = (id, water) => {
+        const newData = data.find(item => item['id'] === id);
+        console.log('newData', newData);
+        const dateNow = moment().format('DD.MM.YYYY');
+        Axios.post('http://localhost:3001/updateWater', {
+            Discribe_Plant: newData.Discribe_Plant,
+            Water_Plant: dateNow,
+            ID_Gardener_FK: store.getState().data[1]['ID_Gardener'],
+        }).then((response) => {
+            console.log(response);
+        })
+    }
+    /*const plantAddClick = id => {
+        console.log(id);
+        const newData = data.find(item => item['id'] === id);
+        const dateNow = moment().format('DD.MM.YYYY');
+        console.log(newData['type']);
+        Axios.post('http://localhost:3001/plantAdd', {
+            Name_Plant: newData['Name_Plant'],
+            Ripening_season_Plant: newData['Ripening_season_Plant'],
+            Purpose_Plant: newData['Purpose_Plant'],
+            Discribe_Plant: newData['Discribe_Plant'],
+            Status_Plant: newData['Status_Plant'],
+            Water_Plant: dateNow,
+            ID_Gardener_FK: store.getState().data[1]['ID_Gardener'],
+        }).then((response) => {
+            console.log(response);
+        })
+    }*/
     idNamePlant.forEach((itemTest, index) => {
         let count = 0;
         if (itemTest === item.id) {
@@ -36,7 +82,8 @@ const PlantAddedUser = (item, latitude, longitude, apiGeocoder, dateWater, dateW
             ++count;
         }
     });
-    console.log(item);
+
+
     return (
         <div key={item.id} className="plant__block">
             {item.Name_Plant === 'Арбуз' && <img src={watermelon} alt="трололо" className="plant__image"/>}
@@ -77,6 +124,15 @@ const PlantAddedUser = (item, latitude, longitude, apiGeocoder, dateWater, dateW
                 </Badge>
                 <Badge pill variant="danger">
                     {item.Discribe_Plant}
+                </Badge>
+                <Badge pill variant="dark">
+                    Дата последнего полива {item?.dateWaterBD}
+                </Badge>
+                <Badge pill variant="dark">
+                    {recomWaterPoliv(item.dateWaterBD)}
+                </Badge>
+                <Badge pill variant="success" onClick={() => plantWaterClick(item.id, item.dateWaterBD)}>
+                    Кнопка полива
                 </Badge>
             </div>
         </div>
