@@ -91,27 +91,35 @@ app.post('/login', (req, res) => {
         }
     )
 });
-/*
+
 app.post('/updateUser', (req, res) => {
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const login = req.body.login;
-    const pass = req.body.pass;
-    const birthday = req.body.birthday;
-    const idUsers = req.body.id;
+    const Last_name_Gardener = req.body.Last_name_Gardener;
+    const First_name_Gardener = req.body.First_name_Gardener;
+    const Login_Gardener = req.body.Login_Gardener;
+    const Password_Gardener = req.body.Password_Gardener;
+    const ID_Gardener = req.body.ID_Gardener;
+    const ID_Country_FK = 1;
 
 
-    bcrypt.hash(pass, saltRounds, (err, hash) => {
+    bcrypt.hash(Password_Gardener, saltRounds, (err, hash) => {
         if (err) {
             console.log(err);
         }
-        db.query(`UPDATE Users SET firstname='${firstname}', lastname='${lastname}', login='${login}', pass='${hash}', birthday='${birthday}' WHERE idUsers = '${idUsers}'`, [firstname, lastname, login, hash, birthday],
+        db.query(`UPDATE Gardener SET Last_name_Gardener='${Last_name_Gardener}', First_name_Gardener='${First_name_Gardener}', Login_Gardener='${Login_Gardener}', Password_Gardener='${hash}', ID_Country_FK='${ID_Country_FK}' WHERE ID_Gardener = '${ID_Gardener}'`, [Last_name_Gardener, First_name_Gardener, Login_Gardener, hash, ID_Country_FK, ID_Gardener],
             (err, result) => {
                 console.log(err);
                 console.log(result);
             });
     })
-});*/
+});
+
+app.get("/users", (req,res) => {
+    if (req.session.user) {
+        res.send({loggedIn: true, user: req.session.user})
+    } else {
+        res.send({loggedIn: false})
+    }
+});
 
 
 app.post('/plantAdd', (req, res) => {
